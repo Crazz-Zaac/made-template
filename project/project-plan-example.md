@@ -1,30 +1,35 @@
 # Project Plan
 
-## A visual inspection of Renewable Energy across North and South America
+## A visual inspection of Regional Economic Trends: North America & Latin America Analysis
 <!-- Give your project a short title. -->
 This analysis utilizes the International Renewable Energy Agency (IRENA) dataset to carry out a comprehensive visual inspection of the energy deployment across the Americas. Some of the key aspects that will be covered are: Costs, Energy Transition, Capacity and Generation and Investment trends.
 
 ## Main Question
 
 <!-- Think about one main question you want to answer based on the data. -->
-1. What are the trends in renewable energy investments in Latin American countries, and how do they compare to fossil fuel investments over the past decade?
+1. How have economic indicators (such as GDP, poverty rate, or education level) evolved over time across different countries in North America and Latin America & the Caribbean, and what trends or patterns can be identified in their development?
 
-2. What is the rate of adoption of renewable energy sources in countries across the Americas, and what factor contributes to differences?
+
 
 ## Description
 
 <!-- Describe your data science project in max. 200 words. Consider writing about why and how you attempt it. -->
-This project aims to analyze the renewable energy landscape in North and South America using the IRENA dataset. By examining trends in investment, capacity, and generation of renewable energy, we can gain insights into the energy transition in these regions. The analysis will involve visualizations to depict how renewable energy adoption varies by country and region, identifying factors such as government policies, economic conditions, and technological advancements that influence these trends. By comparing renewable energy investments to fossil fuel investments, this project seeks to highlight the evolving dynamics of energy financing and its implications for sustainable development in the Americas.
+For this project, I am working on integrating and analyzing global economic and development indicators from the World Bank for different regions. The goal is to clean, merge, and store these indicators in an SQLite database to facilitate future analysis. The project begins by downloading raw CSV files containing economic data as well as many indicators for North America and Latin America & the Caribbean. These files are then extracted from compressed archives, cleaned by removing unnecessary columns, and merged with metadata that provides descriptions for each indicator. The data is then transformed to match a predefined schema with columns for country names, indicator codes, and values for each year from 1960 to 2023.
 
 ## Datasources
 
 <!-- Describe each datasources you plan to use in a section. Use the prefic "DatasourceX" where X is the id of the datasource. -->
 
-The International Renewable Energy Agency (IRENA) is a lead global intergovernmental agency for energy transformation that serves as the principal platform for international cooperation, supports countries in their energy transitions, and provides state of the art data and analyses on technology, innovation, policy, finance and investment. IRENA drives the widespread adoption and sustainable use of all forms of renewable energy, including bioenergy, geothermal, hydropower, ocean, solar and wind energy in the pursuit of sustainable development, energy access, and energy security, for economic and social resilience and prosperity and a climate-proof future. [IRENA Website](https://www.irena.org/About)
+Datasource1: North America Economic Data [World Bank](https://data.worldbank.org/country)
+This dataset contains various economic and development indicators for countries in North America, including the United States, Canada, and Mexico. It includes data on GDP, poverty rates, education, healthcare, and other socio-economic indicators over time (from 1960 to 2023). The data is provided by the World Bank in CSV format and will be used to examine the economic development and trends in the North American region. The source is available for download through a World Bank API, which delivers the data in a zip file.
 
-### Datasource: IRENA Dataset
-* Metadata URL: https://www.irena.org/Data/Downloads/Tools
-* Data URL: https://www.irena.org/Data/Downloads/IRENASTAT
+Datasource2: Latin America & Caribbean Economic Data [World Bank](https://data.worldbank.org/country)
+Similar to the North American dataset, this dataset provides economic and development indicators for countries in Latin America and the Caribbean. It includes a wide range of data on economic growth, social development, and health metrics. The dataset spans the years 1960 to 2023 and will be used to analyze trends in economic and social development for the Latin American and Caribbean region. The data is also provided in CSV format and can be accessed through the World Bank API in a compressed zip file. [IRENA Website](https://www.irena.org/About)
+
+### Datasource: World Bank Dataset
+* Metadata URL: https://data.worldbank.org/country
+* Data source 1: https://data.worldbank.org/region/north-america?view=chart
+* Data source 2: https://data.worldbank.org/region/north-america?view=chart
 * Data Type: xlsx
 
 
