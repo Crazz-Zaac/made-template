@@ -38,10 +38,10 @@ Similar to the North American dataset, this dataset provides economic and develo
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
-1. Data Collection and Cleaning [#1][i1]
-2. Exploratory Data Analysis [#2][i1]
-3. Visualization Development [#3][i1]
-4. Comparision of Investment Trends [#4][i1]
-5. Final Report and Presentation [#5][i1]
+[x] Data Collection and Cleaning [#1][i1]
+[] Exploratory Data Analysis [#2][i1]
+[] Visualization Development [#3][i1]
+[] Comparision of Investment Trends [#4][i1]
+[] Final Report and Presentation [#5][i1]
 
 [i1]: https://github.com/jvalue/made-template/issues/1
