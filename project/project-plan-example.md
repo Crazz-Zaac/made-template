@@ -14,7 +14,7 @@ This analysis utilizes the International Renewable Energy Agency (IRENA) dataset
 ## Description
 
 <!-- Describe your data science project in max. 200 words. Consider writing about why and how you attempt it. -->
-For this project, I am working on integrating and analyzing global economic and development indicators from the World Bank for different regions. The goal is to clean, merge, and store these indicators in an SQLite database to facilitate future analysis. The project begins by downloading raw CSV files containing economic data as well as many indicators for North America and Latin America & the Caribbean. These files are then extracted from compressed archives, cleaned by removing unnecessary columns, and merged with metadata that provides descriptions for each indicator. The data is then transformed to match a predefined schema with columns for country names, indicator codes, and values for each year from 1960 to 2023.
+For this project, I am working on integrating and analyzing global economic and development indicators from the World Bank for different regions. The goal is to clean, merge, and store these indicators in an SQLite database to facilitate future analysis. The project begins by downloading raw CSV files containing economic data as well as many indicators for North America and Latin America & the Caribbean. These files are then extracted from compressed archives, cleaned by removing unnecessary columns, and merged with metadata that provides descriptions for each indicator. The data is then transformed to match a predefined schema with columns for country names, indicator codes, and values for each year from 1960 to 2023 and stored in two tables 'LCN' and 'NAC' of the world_data.sqlite database.
 
 ## Datasources
 
