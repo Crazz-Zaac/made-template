@@ -30,7 +30,7 @@ Similar to the North American dataset, this dataset provides economic and develo
 * Metadata URL: https://data.worldbank.org/country
 * Data source 1: https://data.worldbank.org/region/north-america?view=chart
 * Data source 2: https://data.worldbank.org/region/north-america?view=chart
-* Data Type: xlsx
+* Data Type: csv 
 
 
 
