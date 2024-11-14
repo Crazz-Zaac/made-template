@@ -20,17 +20,20 @@ For this project, I am working on integrating and analyzing global economic and 
 
 <!-- Describe each datasources you plan to use in a section. Use the prefic "DatasourceX" where X is the id of the datasource. -->
 
-Datasource1: North America Economic Data [World Bank](https://data.worldbank.org/country)
+Datasource 1: North America Economic Data [World Bank](https://data.worldbank.org/region/north-america?view=chart)
 This dataset contains various economic and development indicators for countries in North America, including the United States, Canada, and Mexico. It includes data on GDP, poverty rates, education, healthcare, and other socio-economic indicators over time (from 1960 to 2023). The data is provided by the World Bank in CSV format and will be used to examine the economic development and trends in the North American region. The source is available for download through a World Bank API, which delivers the data in a zip file.
 
-Datasource2: Latin America & Caribbean Economic Data [World Bank](https://data.worldbank.org/country)
-Similar to the North American dataset, this dataset provides economic and development indicators for countries in Latin America and the Caribbean. It includes a wide range of data on economic growth, social development, and health metrics. The dataset spans the years 1960 to 2023 and will be used to analyze trends in economic and social development for the Latin American and Caribbean region. The data is also provided in CSV format and can be accessed through the World Bank API in a compressed zip file. [IRENA Website](https://www.irena.org/About)
+Datasource 2: Latin America & Caribbean Economic Data [World Bank]( https://data.worldbank.org/region/latin-america-and-caribbean?view=chart)
+Similar to the North American dataset, this dataset provides economic and development indicators for countries in Latin America and the Caribbean. It includes a wide range of data on economic growth, social development, and health metrics. The dataset spans the years 1960 to 2023 and will be used to analyze trends in economic and social development for the Latin American and Caribbean region. The data is also provided in CSV format and can be accessed through the World Bank API in a compressed zip file. [World bank Website](https://data.worldbank.org/)
 
 ### Datasource: World Bank Dataset
 * Metadata URL: https://data.worldbank.org/country
 * Data source 1: https://data.worldbank.org/region/north-america?view=chart
-* Data source 2: https://data.worldbank.org/region/north-america?view=chart
-* Data Type: csv 
+* Data source 2: https://data.worldbank.org/region/latin-america-and-caribbean?view=chart
+* Data Type: csv
+
+### License
+[Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets)
 
 
 
