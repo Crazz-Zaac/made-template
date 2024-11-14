@@ -7,7 +7,7 @@ This analysis utilizes the International Renewable Energy Agency (IRENA) dataset
 ## Main Question
 
 <!-- Think about one main question you want to answer based on the data. -->
-1. How have economic indicators (such as GDP, poverty rate, or education level) evolved over time across different countries in North America and Latin America & the Caribbean, and what trends or patterns can be identified in their development?
+* How have economic indicators (such as GDP, poverty rate, or education level) evolved over time across different countries in North America and Latin America & the Caribbean, and what trends or patterns can be identified in their development?
 
 
 
