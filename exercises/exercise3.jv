@@ -1,109 +1,77 @@
-pipeline WorldBank{
+pipeline WorldBank {
 
-    // //1. WorldBank Pipeline connects the blocks via pipes to extract data from a CSV file
-    // // in the web to a SQLite file sink.    
-    // WorldBankHttpExtractor 
-    //     -> WorldBankTextXLSXInterpreter;
-    //     // -> DataCellSheetpicker;
-    
-    // //2. The WorldBankTextFileInterpreter output is used as input for the WorldBankCsvFileInterpreter
-    // // block which is then used as input for the WorldBankDataSelector block.
-    // WorldBankTextXLSXInterpreter
-    //     -> DataCellSheetpicker
-    //     -> WorldBankRangeSelector
-    //     -> NameHeaderWriter
-    //     -> WorldBankTableInterpreter
-    //     -> BondIssuanceSelector
-    //     -> GDPSelector
-    //     -> BondIssuanceTableLoader
-    //     -> GDPTableLoader;
-
-
-    //3. The WorldBankHttpExtractor block is of type HttpExtractor and the URL is specified.
+    // 1. Block to extract an XLSX file from the web
     block WorldBankHttpExtractor oftype HttpExtractor {
-        // URL of the data source
+        // URL of the source file containing the data
         url: "https://thedocs.worldbank.org/en/doc/7d852628d96b9411d43e5d36d5dff941-0050062022/original/Graphs-Chapter-5-02082022.xlsx";
     }
 
-    //4. The WorldBankTextFileInterpreter block is of type TextFileInterpreter.
+    // 2. Block to interpret the downloaded file as an XLSX workbook
     block WorldBankTextXLSXInterpreter oftype XLSXInterpreter { }
 
-    //Selecting only the sheet S5.1.2 from the excel file
+    // 3. Block to select the specific sheet "Figure S5.1.2" from the workbook
     block DataCellSheetpicker oftype SheetPicker {
-        // Specify the separator as a semicolon for the CSV
         sheetName: "Figure S5.1.2";
     }
 
-    //Selecting the range of cells
+    // 4. Block to specify the cell range of interest in the selected sheet
     block WorldBankRangeSelector oftype CellRangeSelector {
-        // The name of the column
         select: range P2:S45;
     }
 
-    // Renaming the columns
+    // 5. Block to rename columns for clarity and standardization
     block NameHeaderWriter oftype CellWriter {
-        // The name of the column
         at: range A1:D1;
         write: ["Country Code", "Economy", "GDP per Capita", "Bond Issuance Share"];
     }
 
-    // Selecting the Bond Issuance Share column
+    // 6. Block to interpret and filter the "Bond Issuance Share" column data
     block BondIssuanceTableInterpreter oftype TableInterpreter {
-        // The name of the column
         columns: [
             "Country Code" oftype CountryCodeAlpha3,
-            // "Economy" oftype text,
-            // "GDP per Capita" oftype PositiveDecimal,
             "Bond Issuance Share" oftype BetweenZeroAndOne,
         ];
     }
 
-    // Selecting the GDP per Capita column
+    // 7. Block to interpret and filter the "GDP per Capita" column data
     block GDPTableInterpreter oftype TableInterpreter {
-        // The name of the column
         columns: [
             "Country Code" oftype CountryCodeAlpha3,
-            // "Economy" oftype text,
             "GDP per Capita" oftype PositiveDecimal,
-            // "Bond Issuance Share" oftype BetweenZeroAndOne,
         ];
     }
 
+    // 8. Block to load "Bond Issuance Share" data into a SQLite table
     block BondIssuanceTableLoader oftype SQLiteLoader {
-        // The name of the table
-        table: "bondIssuance";
-        // The name of the file
-        file: "data/country-stats.sqlite";
+        table: "bondIssuance"; // Table name in the SQLite database
+        file: "country-stats.sqlite"; // SQLite database file
     }
 
+    // 9. Block to load "GDP per Capita" data into a SQLite table
     block GDPTableLoader oftype SQLiteLoader {
-        // The name of the table
-        table: "gdpPerCapita";
-        // The name of the file
-        file: "data/country-stats.sqlite";
+        table: "gdpPerCapita"; // Table name in the SQLite database
+        file: "country-stats.sqlite"; // SQLite database file
     }
 
-
+    // 10. Value type to enforce positive decimal values
     valuetype PositiveDecimal oftype decimal {
-        // The value of the column
         constraints: [
-            // only allow column values that start with "Vogelsang"
-            OnlyPositiveDecimal
+            OnlyPositiveDecimal // Constraint: Values must be > 0
         ];
     }
 
+    // 11. Value type to enforce decimal values between 0 and 1
     valuetype BetweenZeroAndOne oftype decimal {
-        // The value of the column
         constraints: [
-            // only allow column values that are between 0 and 1
-            BetweenZeroAndOneConstraint
+            BetweenZeroAndOneConstraint // Constraint: 0 <= value <= 1
         ];
     }
 
+    // 12. Constraints definitions
     constraint OnlyPositiveDecimal on decimal: value > 0;
     constraint BetweenZeroAndOneConstraint on decimal: value >= 0 and value <= 1;
 
-
+    // Pipeline connections
     WorldBankHttpExtractor
         -> WorldBankTextXLSXInterpreter;
 
@@ -117,10 +85,8 @@ pipeline WorldBank{
         -> BondIssuanceTableInterpreter
         -> BondIssuanceTableLoader;
 
+    // GDP per Capita pipeline
     NameHeaderWriter
         -> GDPTableInterpreter
         -> GDPTableLoader;
-
-
 }
-
