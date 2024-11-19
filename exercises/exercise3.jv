@@ -1,0 +1,126 @@
+pipeline WorldBank{
+
+    // //1. WorldBank Pipeline connects the blocks via pipes to extract data from a CSV file
+    // // in the web to a SQLite file sink.    
+    // WorldBankHttpExtractor 
+    //     -> WorldBankTextXLSXInterpreter;
+    //     // -> DataCellSheetpicker;
+    
+    // //2. The WorldBankTextFileInterpreter output is used as input for the WorldBankCsvFileInterpreter
+    // // block which is then used as input for the WorldBankDataSelector block.
+    // WorldBankTextXLSXInterpreter
+    //     -> DataCellSheetpicker
+    //     -> WorldBankRangeSelector
+    //     -> NameHeaderWriter
+    //     -> WorldBankTableInterpreter
+    //     -> BondIssuanceSelector
+    //     -> GDPSelector
+    //     -> BondIssuanceTableLoader
+    //     -> GDPTableLoader;
+
+
+    //3. The WorldBankHttpExtractor block is of type HttpExtractor and the URL is specified.
+    block WorldBankHttpExtractor oftype HttpExtractor {
+        // URL of the data source
+        url: "https://thedocs.worldbank.org/en/doc/7d852628d96b9411d43e5d36d5dff941-0050062022/original/Graphs-Chapter-5-02082022.xlsx";
+    }
+
+    //4. The WorldBankTextFileInterpreter block is of type TextFileInterpreter.
+    block WorldBankTextXLSXInterpreter oftype XLSXInterpreter { }
+
+    //Selecting only the sheet S5.1.2 from the excel file
+    block DataCellSheetpicker oftype SheetPicker {
+        // Specify the separator as a semicolon for the CSV
+        sheetName: "Figure S5.1.2";
+    }
+
+    //Selecting the range of cells
+    block WorldBankRangeSelector oftype CellRangeSelector {
+        // The name of the column
+        select: range P2:S45;
+    }
+
+    // Renaming the columns
+    block NameHeaderWriter oftype CellWriter {
+        // The name of the column
+        at: range A1:D1;
+        write: ["Country Code", "Economy", "GDP per Capita", "Bond Issuance Share"];
+    }
+
+    // Selecting the Bond Issuance Share column
+    block BondIssuanceTableInterpreter oftype TableInterpreter {
+        // The name of the column
+        columns: [
+            "Country Code" oftype CountryCodeAlpha3,
+            // "Economy" oftype text,
+            // "GDP per Capita" oftype PositiveDecimal,
+            "Bond Issuance Share" oftype BetweenZeroAndOne,
+        ];
+    }
+
+    // Selecting the GDP per Capita column
+    block GDPTableInterpreter oftype TableInterpreter {
+        // The name of the column
+        columns: [
+            "Country Code" oftype CountryCodeAlpha3,
+            // "Economy" oftype text,
+            "GDP per Capita" oftype PositiveDecimal,
+            // "Bond Issuance Share" oftype BetweenZeroAndOne,
+        ];
+    }
+
+    block BondIssuanceTableLoader oftype SQLiteLoader {
+        // The name of the table
+        table: "bondIssuance";
+        // The name of the file
+        file: "data/country-stats.sqlite";
+    }
+
+    block GDPTableLoader oftype SQLiteLoader {
+        // The name of the table
+        table: "gdpPerCapita";
+        // The name of the file
+        file: "data/country-stats.sqlite";
+    }
+
+
+    valuetype PositiveDecimal oftype decimal {
+        // The value of the column
+        constraints: [
+            // only allow column values that start with "Vogelsang"
+            OnlyPositiveDecimal
+        ];
+    }
+
+    valuetype BetweenZeroAndOne oftype decimal {
+        // The value of the column
+        constraints: [
+            // only allow column values that are between 0 and 1
+            BetweenZeroAndOneConstraint
+        ];
+    }
+
+    constraint OnlyPositiveDecimal on decimal: value > 0;
+    constraint BetweenZeroAndOneConstraint on decimal: value >= 0 and value <= 1;
+
+
+    WorldBankHttpExtractor
+        -> WorldBankTextXLSXInterpreter;
+
+    WorldBankTextXLSXInterpreter
+        -> DataCellSheetpicker
+        -> WorldBankRangeSelector
+        -> NameHeaderWriter;
+
+    // Bond Issuance pipeline
+    NameHeaderWriter
+        -> BondIssuanceTableInterpreter
+        -> BondIssuanceTableLoader;
+
+    NameHeaderWriter
+        -> GDPTableInterpreter
+        -> GDPTableLoader;
+
+
+}
+
