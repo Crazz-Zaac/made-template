@@ -1,0 +1,92 @@
+pipeline MobiliThek{
+
+    block DataExtractor oftype HttpExtractor {
+                url : "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
+    }
+
+    block DataInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    block FilePicker oftype FilePicker {
+        path: "/data.csv";
+    }
+
+    block TextFileInterpreter oftype TextFileInterpreter { }
+
+    block CSVInterpreter oftype CSVInterpreter {
+        delimiter: ';';
+    }
+
+    block CellRangeSelector oftype CellRangeSelector {
+        select: range A1:J*;
+    }
+
+    block DeleteSomeColumns oftype ColumnDeleter {
+        delete: [column F, column G, column H, column I];
+    }
+
+    block RenameColumns oftype CellWriter {
+        at: range A1:F1;
+        write: ["id", "producer", "model", "month", "temperature", "battery_temperature"];
+    }
+
+    block TempMeasurementTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "id" oftype integer,
+            "producer" oftype text,
+            "model" oftype text,
+            "month" oftype integer,
+            "temperature" oftype integer,
+            "battery_temperature" oftype integer,
+        ];
+    }
+
+    block DataLoader oftype SQLiteLoader {
+        table: "temperatures";
+        file: "temperatures.sqlite";
+    }
+
+    DataExtractor 
+        -> DataInterpreter 
+        -> FilePicker 
+        -> TextFileInterpreter 
+        -> CSVInterpreter 
+        -> CellRangeSelector
+        -> DeleteSomeColumns
+        -> RenameColumns
+        -> TempMeasurementTableInterpreter
+        -> DataLoader;
+}
+
+
+//     block DeleteSomeColumns oftype ColumnDeleter {
+//         delete: [column F, column G, column H, column I];
+//     }
+
+
+//     block RenameColumns oftype CellWriter {
+//         at: range A1:F1;
+//         write: ["id", "producer", "model", "month", "temperature", "battery_temperature"];
+//     }
+
+//     block TempMeasurementTableInterpreter oftype TableInterpreter {
+//         header: true;
+//         columns: [
+//             "id" oftype integer,
+//             "producer" oftype text,
+//             "model" oftype text,
+//             "month" oftype integer,
+//             "temperature" oftype integer,
+//             "battery_temperature" oftype integer,
+//         ];
+//     }
+
+//     block TempMeasurementLoader oftype SQLiteLoader {
+//         table: "temperatures";
+//         file: "temperatures.sqlite";
+//     }
+
+
+// }
