@@ -27,27 +27,41 @@ pipeline GTFS {
             "stop_name" oftype text, 
             "stop_lat" oftype BetweenPlusMinusNinety, 
             "stop_lon" oftype BetweenPlusMinusNinety, 
-            "zone_id" oftype ValidZone 
+            "zone_id" oftype ValidZone, 
         ];
     }
+
+    valuetype GermanUmlauts oftype text{
+        constraints: [
+            GermanUmlautsConstraint
+        ];
+    }
+
+    constraint GermanUmlautsConstraint on text: value matches /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;   ///^(?=.*[äöüÄÖÜß])[A-Za-z0-9äöüÄÖÜß]*$/;
 
     valuetype BetweenPlusMinusNinety oftype decimal{
         constraints: [
             BetweenPlusMinusNinetyConstraint
         ];
     }
-    constraint BetweenPlusMinusNinetyConstraint on decimal: value >= -90 and value <= 90;
+    constraint BetweenPlusMinusNinetyConstraint oftype RangeConstraint{
+        lowerBound: -90;
+        lowerBoundInclusive: true;
+        upperBound: 90;
+        upperBoundInclusive: true;
+    }
 
 
-    valuetype ValidZone oftype text{
+    valuetype ValidZone oftype integer{
         constraints: [
             ValidZoneConstraint
         ];
     }
+    
 
     constraint ValidZoneConstraint oftype RangeConstraint{
-        lowerBound: 2001;
-        upperBound: 2001;
+        lowerBound: 1925;
+        // upperBound: 1925;
     }
 
     block GTFSDataLoader oftype SQLiteLoader{
