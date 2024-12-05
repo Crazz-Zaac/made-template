@@ -79,7 +79,7 @@ pipeline MobiliThek{
     transform FahrenheitUnit {
         from Celsius oftype decimal;
         to Fahrenheit oftype decimal;
-        Fahrenheit: round(Celsius * 9/5 + 32);
+        Fahrenheit: Celsius * 9/5 + 32;
     }
 
     valuetype BetweenOneAndTwelve oftype integer {

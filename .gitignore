@@ -3,3 +3,5 @@
 !/data/.gitkeep
 .mypy_cache/
 temp_dir/
+__pycache__/
+*.pyc

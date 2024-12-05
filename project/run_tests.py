@@ -23,8 +23,9 @@ class TestDataProcessing(unittest.TestCase):
 
     @patch("sqlalchemy.create_engine")
     def test_create_database_engine(self, mock_create_engine):
+        db_path = "data/world_data.sqlite"
         engine = create_database_engine()
-        mock_create_engine.assert_called_with("sqlite:///data/world_data.sqlite")
+        mock_create_engine.assert_called_with(f"sqlite:///{db_path}")
         self.assertIsNotNone(engine)
 
     @patch("requests.get")
