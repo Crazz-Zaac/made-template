@@ -5,3 +5,4 @@
 temp_dir/
 project/__pycache__/
 *.pyc
+*.sqlite
