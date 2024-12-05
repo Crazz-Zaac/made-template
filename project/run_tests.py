@@ -21,7 +21,7 @@ class TestDataProcessing(unittest.TestCase):
         self.assertTrue(mock_makedirs.called)
         self.assertEqual(path, "project/temp_dir")
 
-    @patch("sqlalchemy.create_engine")
+    @patch("prepare_data.create_engine")
     def test_create_database_engine(self, mock_create_engine):
         db_path = "data/world_data.sqlite"
         engine = create_database_engine()
@@ -69,3 +69,7 @@ class TestDataProcessing(unittest.TestCase):
     def test_clean_up(self, mock_rmtree):
         clean_up("temp_dir")
         self.assertTrue(mock_rmtree.called)
+
+
+if __name__ == "__main__":
+    unittest.main()
