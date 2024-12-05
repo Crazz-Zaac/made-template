@@ -54,7 +54,7 @@ pipeline MobiliThek{
             "id" oftype integer,
             "producer" oftype text,
             "model" oftype text,
-            "month" oftype integer,
+            "month" oftype BetweenOneAndTwelve,
             "temperature" oftype decimal,
             "battery_temperature" oftype decimal,
         ];
@@ -79,8 +79,17 @@ pipeline MobiliThek{
     transform FahrenheitUnit {
         from Celsius oftype decimal;
         to Fahrenheit oftype decimal;
-        Fahrenheit: Celsius * 9/5 + 32;
+        Fahrenheit: round(Celsius * 9/5 + 32);
     }
+
+    valuetype BetweenOneAndTwelve oftype integer {
+        constraints: [
+            BetweenOneAndTwelveConstraint
+        ];
+    }
+
+    constraint BetweenOneAndTwelveConstraint on integer: value >= 1 and value <= 12;
+    
 
     block DataLoader oftype SQLiteLoader {
         table: "temperatures";
