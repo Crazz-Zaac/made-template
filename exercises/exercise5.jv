@@ -36,8 +36,9 @@ pipeline GTFS {
             GermanUmlautsConstraint
         ];
     }
-
-    constraint GermanUmlautsConstraint on text: value matches /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;   ///^(?=.*[äöüÄÖÜß])[A-Za-z0-9äöüÄÖÜß]*$/;
+        // /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;
+        // /^(?=.*[äöüÄÖÜß])[A-Za-z0-9äöüÄÖÜß]*$/;
+    constraint GermanUmlautsConstraint on text: value matches /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;  
 
     valuetype BetweenPlusMinusNinety oftype decimal{
         constraints: [
