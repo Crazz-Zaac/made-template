@@ -12,7 +12,9 @@ pipeline GTFS {
         path: "/stops.txt";
     }
 
-    block GTFSTextFileInterpreter oftype TextFileInterpreter{}
+    block GTFSTextFileInterpreter oftype TextFileInterpreter{
+        encoding: "utf8";
+    }
 
 
     block GTFSCSVInterpreter oftype CSVInterpreter{
@@ -30,15 +32,6 @@ pipeline GTFS {
             "zone_id" oftype ValidZone, 
         ];
     }
-
-    valuetype GermanUmlauts oftype text{
-        constraints: [
-            GermanUmlautsConstraint
-        ];
-    }
-        // /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;
-        // /^(?=.*[äöüÄÖÜß])[A-Za-z0-9äöüÄÖÜß]*$/;
-    constraint GermanUmlautsConstraint on text: value matches /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;  
 
     valuetype BetweenPlusMinusNinety oftype decimal{
         constraints: [
