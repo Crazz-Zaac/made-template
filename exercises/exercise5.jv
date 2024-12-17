@@ -60,10 +60,12 @@ pipeline GTFS {
     }
     
 
-    constraint ValidZoneConstraint oftype RangeConstraint{
-        lowerBound: 1925;
-        // upperBound: 1925;
-    }
+    // constraint ValidZoneConstraint oftype RangeConstraint{
+    //     lowerBound: 1925;
+    //     // upperBound: 1925;
+    // }
+
+    constraint ValidZoneConstraint on integer: value >= 1925 ;
 
     block GTFSDataLoader oftype SQLiteLoader{
         table: "stops";
