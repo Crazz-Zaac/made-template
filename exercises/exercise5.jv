@@ -33,6 +33,15 @@ pipeline GTFS {
         ];
     }
 
+    // valuetype GermanUmlauts oftype text{
+    //     constraints: [
+    //         GermanUmlautsConstraint
+    //     ];
+    // }
+    //     // /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;
+    //     // /^(?=.*[äöüÄÖÜß])[A-Za-z0-9äöüÄÖÜß]*$/;
+    // constraint GermanUmlautsConstraint on text: value matches /^[A-Za-z0-9äöüÄÖÜß\s\-\.(),]*$/;  
+
     valuetype BetweenPlusMinusNinety oftype decimal{
         constraints: [
             BetweenPlusMinusNinetyConstraint
@@ -58,7 +67,7 @@ pipeline GTFS {
     //     // upperBound: 1925;
     // }
 
-    constraint ValidZoneConstraint on integer: value >= 1925 ;
+    constraint ValidZoneConstraint on integer: value == 1925 ;
 
     block GTFSDataLoader oftype SQLiteLoader{
         table: "stops";
