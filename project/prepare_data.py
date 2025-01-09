@@ -1,10 +1,4 @@
-import requests
-import zipfile
-import io
-import os
-import pandas as pd
-import shutil
-from sqlalchemy import create_engine, Table, Column, String, Integer, Float, MetaData
+ 
 
 
 def create_temp_directory(path="project/temp_dir"):
