@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import requests
 import shutil
+import zipfile
 from sqlalchemy import create_engine, Table, Column, String, Integer, Float, MetaData
 
 
