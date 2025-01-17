@@ -48,3 +48,8 @@ project.
 4. Run the data pipeline using `project/pipeline.sh`
 4. You can now open `final_report.ipynb` and explore.
 
+
+
+## License
+
+This project is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0). You are free to share and adapt the work as long as you provide appropriate credit. For more details, see the [LICENSE](LICENSE) file or visit [Creative Commons](https://creativecommons.org/licenses/by/4.0/).
